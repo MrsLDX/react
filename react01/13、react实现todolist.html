@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- 提供React对象 -->
+  <script src="../base/react.min.js"></script>
+  <!-- 提供ReactDOM对象 -->
+  <script src="../base/react-dom.min.js"></script>
+  <!-- 帮助浏览器解析jsx(javascriptxml) -->
+  <script src="../base/browser.min.js"></script>
+  <title>Document</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <div id='app'>
+  </div>
+  <script type='text/babel'>
+    //创建一个组件 ，是一个虚拟dom
+    let Box=React.createClass({
+      getInitialState(){
+        return{
+          list:[{txt:'hehe',finish:false},
+          {txt:'xixi',finish:true}]
+        }
+      },
+      addList(msg){
+        let list=this.state.list
+        list.push({txt:msg,finish:false})
+        this.setState({list:list})
+      },
+      del(index){
+        let list=this.state.list
+        list.splice(index,1)
+        this.setState({list:list})
+      },
+      finish(index){
+        let list=this.state.list
+        list[index].finish=true
+        this.setState({})
+      },
+      render(){
+        return(
+          <div>
+            <Input addList={this.addList}></Input>
+            <List list={this.state.list} del={this.del} finish={this.finish}></List>
+          </div>
+        )
+      }
+    })
+    let Input=React.createClass({
+      add(){
+        let msg=this.refs.input.value
+        this.props.addList(msg)
+      },
+      render(){
+        return(
+          <div>
+            <input type="text" ref='input'/>
+            <button onClick={this.add}>添加</button>
+          </div>
+        )
+      }
+    })
+    let List=React.createClass({
+      renderList(data){//渲染列表信息
+        if(!data.length) return (<div>暂无代办事项</div>)
+        return(
+          <ul>
+            {
+              data.map((item,index)=>{
+                return(
+            <li>
+              {item.txt}
+              {item.finish?'已完成':<button onClick={this.props.finish.bind(this,index)}>完成</button>}
+              <button onClick={this.props.del.bind(this,index)}>del</button>
+            </li>
+                )
+              })
+            }
+          </ul>
+        )
+      },
+      render(){
+        // console.log(this)
+        let {props}=this
+        return(
+          <div>
+            <ul>
+              {this.renderList(props.list)}
+              </ul>
+          </div>
+        )
+      }
+    })
+    //渲染组件 ,将虚拟dom转换为真实dom
+    ReactDOM.render(<Box/>,app)
+  </script>
+</body>
+</html>

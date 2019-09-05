@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- 提供React对象 -->
+  <script src="../base/react.min.js"></script>
+  <!-- 提供ReactDOM对象 -->
+  <script src="../base/react-dom.min.js"></script>
+  <!-- 帮助浏览器解析jsx(javascriptxml) -->
+  <script src="../base/browser.min.js"></script>
+  <title>Document</title>
+  <style>
+    .test{
+      width:100px;
+      height:100px;
+      background:red;
+    }
+  </style>
+</head>
+<body>
+  <div id='app'>
+
+  </div>
+  <script type='text/babel'>
+    //创建一个组件 ，是一个虚拟dom
+    let Component=React.createClass({
+      getInitialState(){
+        console.log('声明初始化state')
+        return{show:true}
+      },
+      // show:false,
+      toggle(){
+        // this.show=!this.show//点击之后this.show 会变，但页面不渲染
+        // console.log(this.show)
+        // 法一：
+        // this.setState({show:!this.state.show})//setState实现两个功能：1、修改数据，2、通知页面更改
+        // 法二：（分开执行）
+        this.state.show=!this.state.show//修改数据
+        this.setState({})//通知页面更新
+      },
+      render(){
+        console.log('渲染数据',this)
+        let {state}=this
+        return(
+          <div>
+            {!state.show|| <div className='test'></div>}
+            <button onClick={this.toggle}>点击变色</button>
+            </div>
+        )
+      }
+    })
+    //渲染组件 ,将虚拟dom转换为真实dom
+    ReactDOM.render(<Component/>,app)
+  </script>
+</body>
+</html>

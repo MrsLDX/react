@@ -12,30 +12,51 @@
   <script src="../base/browser.min.js"></script>
   <title>Document</title>
   <style>
-   
+    
   </style>
 </head>
 <body>
   <div id='app'>
-
   </div>
   <script type='text/babel'>
     //创建一个组件 ，是一个虚拟dom
-    let Component=React.createClass({
-      listarr:['爱情','科幻','动作','恐怖'],
+    let Father=React.createClass({
+      getInitialState(){
+        return{
+          hairtype:'小平头'
+        }
+      },
+      change(){
+        this.setState({hairtype:'光头'})
+      },
       render(){
         return(
-          <ul>
-            <li>1</li>
-            {this.listarr.map((item)=>{
-              return <li>{item}</li>
-            })}
-          </ul>
+          <div>
+            <h3>这里是父组件</h3>
+            <button onClick={this.change}>该发型</button>
+            <Son hair={this.state.hairtype}></Son>
+          </div>
+        )
+      }
+    })
+    let Son=React.createClass({
+      getDefaultProps(){
+        return{
+          hair:'杀马特'
+        }
+      },
+      render(){
+        let {props,state}=this
+        return(
+          <div>
+            <h5>这里是子组件</h5>
+            <p>小儿子：{props.hair}</p>
+          </div>
         )
       }
     })
     //渲染组件 ,将虚拟dom转换为真实dom
-    ReactDOM.render(<Component/>,app)
+    ReactDOM.render(<Father/>,app)
   </script>
 </body>
 </html>

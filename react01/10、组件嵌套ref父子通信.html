@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- 提供React对象 -->
+  <script src="../base/react.min.js"></script>
+  <!-- 提供ReactDOM对象 -->
+  <script src="../base/react-dom.min.js"></script>
+  <!-- 帮助浏览器解析jsx(javascriptxml) -->
+  <script src="../base/browser.min.js"></script>
+  <title>Document</title>
+  <style>
+    
+  </style>
+</head>
+<body>
+  <div id='app'>
+  </div>
+  <script type='text/babel'>
+    //创建一个组件 ，是一个虚拟dom
+    let Father=React.createClass({
+      getInitialState(){
+        return{
+          hairtype:'小平头'
+        }
+      },
+      change(){
+        this.refs.hehe.sontest()
+      },
+      render(){
+        console.log(this)//打印时，refs中有hehe,这里是一个假象！！
+        console.log(this.refs)//在此处打印是一个空对象，因为此时h3dom元素还没有渲染
+        console.log(this.refs.hehe)//在此处打印是一个undefined，因为此时h3dom元素还没有渲染
+        return(
+          <div>
+            <h3 >这里是父组件</h3>
+            <button onClick={this.change}>弹框</button>
+            <Son ref='hehe'></Son>
+          </div>
+        )
+      }
+    })
+    let Son=React.createClass({
+      getDefaultProps(){
+        return{
+          
+        }
+      },
+      sontest(){
+        alert('点击子组件')
+      },
+      render(){
+        let {props,state}=this
+        return(
+          <div>
+            <h5>这里是子组件</h5>
+          </div>
+        )
+      }
+    })
+    //渲染组件 ,将虚拟dom转换为真实dom
+    ReactDOM.render(<Father/>,app)
+  </script>
+</body>
+</html>

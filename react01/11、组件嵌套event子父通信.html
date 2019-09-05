@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- 提供React对象 -->
+  <script src="../base/react.min.js"></script>
+  <!-- 提供ReactDOM对象 -->
+  <script src="../base/react-dom.min.js"></script>
+  <!-- 帮助浏览器解析jsx(javascriptxml) -->
+  <script src="../base/browser.min.js"></script>
+  <title>Document</title>
+  <style>
+    .test{
+      width:100px;
+      height:100px;
+      background:red;
+    }
+  </style>
+</head>
+<body>
+  <div id='app'>
+  </div>
+  <script type='text/babel'>
+    //创建一个组件 ，是一个虚拟dom
+    let Father=React.createClass({
+      getInitialState(){
+        return{
+          show:true
+        }
+      },
+      fatherfun(){
+        // alert('父的方法')
+        this.setState({show:!this.state.show})
+      },
+      render(){
+        return(
+          <div>
+            <h3 >这里是父组件</h3>
+            {!this.state.show||<div className='test'></div>}
+            <Son hehe={this.fatherfun}></Son>
+          </div>
+        )
+      }
+    })
+    let Son=React.createClass({
+      sonfun(){
+        this.props.hehe()
+      },
+      render(){
+        console.log(this)
+        return(
+          <div>
+            <h5>这里是子组件</h5>
+            <button onClick={this.sonfun}>sonbtn</button>
+          </div>
+        )
+      }
+    })
+    //渲染组件 ,将虚拟dom转换为真实dom
+    ReactDOM.render(<Father/>,app)
+  </script>
+</body>
+</html>

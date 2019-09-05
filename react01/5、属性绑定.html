@@ -12,7 +12,14 @@
   <script src="../base/browser.min.js"></script>
   <title>Document</title>
   <style>
-   
+   .red{
+     background:red;
+     height:100px;
+   }
+   .blue{
+     background:blue;
+     height:100px;
+   }
   </style>
 </head>
 <body>
@@ -22,15 +29,10 @@
   <script type='text/babel'>
     //创建一个组件 ，是一个虚拟dom
     let Component=React.createClass({
-      listarr:['爱情','科幻','动作','恐怖'],
+      color:false,
       render(){
         return(
-          <ul>
-            <li>1</li>
-            {this.listarr.map((item)=>{
-              return <li>{item}</li>
-            })}
-          </ul>
+          <div className={this.color?'red':'blue'}></div>
         )
       }
     })
