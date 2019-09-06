@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="../base/react.min.js"></script>
+  <!-- 提供了react对象 -->
+  <script src="../base/react-dom.min.js"></script>
+  <!--  提供reactdom‘对象-->
+  <script src="../base/browser.min.js"></script>
+  <!-- 帮助浏览器解析jsx javascriptxml   -->
+  <title>Document</title>
+</head>
+<body>
+  <div id='app'>
+  </div>
+  <script type="text/babel">
+    let Father=React.createClass({
+      getInitialState(){
+        return {
+          age:16
+        }
+      },
+      changeAge(){
+        let age=this.state.age
+        age++
+        if(age>=20){
+          age=20
+        }
+        this.setState({age})
+      },
+      shouldComponentUpdate(props,state){
+        console.log('state改变',props,state)
+        if(state.age===this.state.age){
+          return false
+        }
+        return true
+      },
+      componentDidUpdate(props,state){
+        console.log('更改之后',props,state,this.state.age)
+      },
+      render(){
+        console.log('father渲染')
+        return(
+          <div>
+            <h1>这里是父组件</h1>  
+            {this.state.age}
+            <button onClick={()=>{
+              this.changeAge()
+            }}>changeage</button>
+          </div>
+        )
+      }
+    })
+    ReactDOM.render(<Father/>,app)
+  </script>
+</body>
+</html>

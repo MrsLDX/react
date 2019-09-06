@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="../base/react.min.js"></script>
+  <!-- 提供了react对象 -->
+  <script src="../base/react-dom.min.js"></script>
+  <!--  提供reactdom‘对象-->
+  <script src="../base/browser.min.js"></script>
+  <!-- 帮助浏览器解析jsx javascriptxml   -->
+  <title>Document</title>
+</head>
+<body>
+  <div id='app'>
+  </div>
+  <script type="text/babel">
+    let Father=React.createClass({
+      getInitialState(){
+        return {
+          age:16
+        }
+      },
+      changeAge(){
+        let age=++this.state.age
+        if(age>=20){
+          age=20
+        }
+        this.setState({age})
+      },
+      render(){
+        console.log('father渲染')
+        return(
+          <div>
+            <h1>这里是父组件</h1>  
+            <Son age={this.state.age}></Son>
+            <button onClick={()=>{
+              this.changeAge()
+            }}>changeage</button>
+          </div>
+        )
+      }
+    })
+    let Son=React.createClass({
+      getInitialState(){
+        return{
+          name:'hehe'
+        }
+      },
+      componentWillReceiveProps(props){
+        //props参数是更改之后的值，this.props是更改之前的值
+        //在此处可以减少数据请求
+        //17版本被废弃，因为数据请求可能被重新执行
+        console.log('props改变',props,this.props)
+        if(props.age!==this.props.age){
+          setTimeout(()=>{
+            console.log('获取数据')
+          },500)
+        }
+      },
+      shouldComponentUpdate(props,state){
+        //可以控制组件是否重新渲染
+        //参数是更新之后的数据，this是更新前的数据
+        console.log('是否应该更新',props,state,this.props)
+        if(this.props.age===props.age){
+          return false
+        }else{
+          return true
+        }
+      },
+      componentWillUpdate(){
+        //不要在此处进行数据请求，因为请求可能被重新执行
+        console.log('更新之前')
+      },
+      componentDidUpdate(){
+        console.log('更新之后')
+      },
+      render(){
+        console.log('son渲染')
+        return(
+          <div>
+            <h4>son</h4>
+            儿子{this.props.age}岁
+          </div>
+        )
+      }
+    })
+    ReactDOM.render(<Father/>,app)
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="../base/react.min.js"></script>
+  <!-- 提供了react对象 -->
+  <script src="../base/react-dom.min.js"></script>
+  <!--  提供reactdom‘对象-->
+  <script src="../base/browser.min.js"></script>
+  <!-- 帮助浏览器解析jsx javascriptxml   -->
+  <title>Document</title>
+</head>
+<body>
+  <div id='app'>
+  </div>
+  <script type="text/babel">
+    let Hehe=React.createClass({
+      getInitialState(){
+        return {
+          name:'韩梅梅'
+        }
+      },
+      componentWillMount(){
+        //  千万别做数据请求 在异步加载中 render之前的生命周期都会被打断 导致请求多次发送
+      //   别去用它  终将被废弃
+        console.log('挂载之前')
+        console.log(this)
+        console.log(this.state.name)
+        console.log(this.refs.hehe)
+        // this.state.name='李磊'
+      },
+      componentDidMount(){
+        //  1.数据请求 2.初始化dom
+        console.log('挂载结束')
+        console.log(this)
+        console.log(this.state.name)
+        console.log(this.refs.hehe)
+        this.setState({name:'LI'})
+      },
+      render(){
+        console.log('渲染')
+        return(
+          <div>
+            <h1>{this.state.name}</h1>  
+            <hr/>
+            <p ref='hehe'>hehe</p>
+          </div>
+        )
+      }
+    })
+    ReactDOM.render(<Hehe/>,app)
+  </script>
+</body>
+</html>
