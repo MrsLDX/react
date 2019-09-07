@@ -1,18 +1,22 @@
 import React,{Component,Fragment} from 'react'
+import './nav.css'
 class NavComponent extends Component{
   constructor(){
     super()
     this.state={
-      navs:['周杰伦','薛之谦','蔡徐坤'],
-      defaultSel:'周杰伦'
+      navs:['周杰伦','薛之谦','蔡徐坤']
     }
   }
   renderNav(data){
+    let {sel}=this.props
     if(!data.length) return '暂无数据'
     return(
-      <ul>
+      <ul className='nav-list'>
         {data.map((item,index)=>{
-          return <li key={index}>{item}</li>
+          return <li className={sel===item?'nav-list-li primary':'nav-list-li'} 
+                    key={index}
+                    onClick={this.props.fun.bind(this,item)}
+                    >{item}</li>
         })}
       </ul>
     )
